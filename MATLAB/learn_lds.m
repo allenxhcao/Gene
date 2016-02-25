@@ -13,7 +13,7 @@ Aest_best = zeros(nBiomarker,nBiomarker,length(subID));
 x0est_best = zeros(nBiomarker,length(subID));
 dt = 0.1;
 param.lambda_reg = 1e-4;
-param.lambda_smooth = 1e-4;
+param.lambda_smooth = 0;
 param.lambda_initial = 1;
 param.dt = dt;
 
@@ -22,11 +22,11 @@ cA = cell(n_chosen,1);
 cfval = cell(n_chosen,1);
 cx0 = cell(n_chosen,1);
 
-for k = chosen_subID
+for k = 1:n_chosen
     tStart = tic;
-    fprintf(['Case #' num2str(k)])
+    fprintf(['************ Case #' num2str(chosen_subID(k)) '\n'])
 %     disp(['worker#' num2str(k) ' is working'])
-    tData = squeeze(normalizedStackData(:,:,k));
+    tData = squeeze(normalizedStackData(:,:,chosen_subID(k)));
     tData = tData';
     nanTp = isnan(tData(2,:));  % use 2 because if one variable is missing other variables will be missing too
     tData(:,nanTp) = [];
@@ -54,6 +54,7 @@ for k = chosen_subID
     cx0{k} = x0;
     cfval{k} = fval;
     lapse = toc(tStart);
+    fprintf(['************ Case #' num2str(chosen_subID(k))])
     fprintf([' used time ' num2str(lapse) '\n']);
 end
 

@@ -11,9 +11,9 @@ chosen_subID = subID(chosen_ind);
 
 Aest_best = zeros(nBiomarker,nBiomarker,length(subID));
 x0est_best = zeros(nBiomarker,length(subID));
-dt = 0.2;
+dt = 0.1;
 param.lambda_reg = 1e-4;
-param.lambda_smooth = 0;
+param.lambda_smooth = 1e-4;
 param.lambda_initial = 1;
 param.dt = dt;
 
@@ -56,3 +56,5 @@ for k = chosen_subID
     lapse = toc(tStart);
     fprintf([' used time ' num2str(lapse) '\n']);
 end
+
+save('../result/gse54514_top10_processed_lds','cA','cx0','cfval','chosen_subID')
